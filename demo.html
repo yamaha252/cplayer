@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title></title>
+  <meta name="description" content="">
+
+  <link rel="stylesheet" href="player.css">
+  <style>
+    :root {
+      --cplayer-radius: 200px;
+      --cplayer-background-color: #fff6e2;
+      --cplayer-progress-thickness: 20%;
+      --cplayer-progress-base-color: #ffd06e;
+      --cplayer-progress-active-color: #fd7e14;
+      --cplayer-action-size: 100px;
+      --cplayer-action-play-color: #f77833;
+      --cplayer-action-pause-color: #f8b48e;
+    }
+  </style>
+</head>
+
+<body>
+
+<audio src="https://download.samplelib.com/mp3/sample-15s.mp3" controls></audio>
+
+<script type="module">
+  import {CircularPlayer} from './player.js';
+  new CircularPlayer(document.querySelector('audio'));
+</script>
+
+</body>
+
+</html>
