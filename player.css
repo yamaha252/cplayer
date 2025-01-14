@@ -1,5 +1,4 @@
 :root {
-  --percent: 0%;
   --cplayer-radius: 100px;
   --cplayer-background-color: #fff;
   --cplayer-progress-thickness: 20%;
@@ -8,6 +7,12 @@
   --cplayer-action-size: 60px;
   --cplayer-action-play-color: grey;
   --cplayer-action-pause-color: silver;
+}
+
+@property --percent {
+  syntax: '<percentage>';
+  inherits: false;
+  initial-value: 0%;
 }
 
 .cplayer {
@@ -26,7 +31,7 @@
   --height: calc(100% - var(--cplayer-progress-thickness));
   background: radial-gradient(closest-side, var(--cplayer-background-color) var(--height), transparent var(--height) 100%),
   conic-gradient(var(--cplayer-progress-active-color) var(--percent), var(--cplayer-progress-base-color) 0);
-  transition: --percent 2s linear;
+  transition: --percent .3s linear;
 }
 
 .cplayer__action {

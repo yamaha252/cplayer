@@ -32,13 +32,12 @@ export class CircularPlayer {
   #insertProgress() {
     this.#progress = document.createElement('div');
     this.#progress.classList.add('cplayer__progress');
-    this.#progress.style.setProperty('--percent', '0%');
     this.#wrapper.appendChild(this.#progress);
     this.#audio.addEventListener('timeupdate', () => {
       const duration = this.#audio.duration;
       const currentTime = this.#audio.currentTime;
-      const progress = Math.ceil((currentTime / duration) * 100);
-      this.#progress.style.setProperty('--percent', progress + '%');
+      const progress = (currentTime / duration) * 100;
+      this.#progress.style.setProperty('--percent', progress.toFixed(2) + '%');
     });
   }
 
