@@ -1,58 +1,59 @@
 export class CircularPlayer {
-  #audio;
+  audio;
   #wrapper;
-  #progress;
-  #action;
 
   constructor(el) {
-    this.#audio = el;
-    this.#audio.removeAttribute('controls');
+    this.audio = el;
+    this.audio.removeAttribute('controls');
 
     this.#wrap();
     this.#insertProgress();
-    this.#insertAction();
+    this.#insertActions();
   }
 
   #wrap() {
     this.#wrapper = document.createElement('div');
     this.#wrapper.classList.add('cplayer');
-    this.#audio.parentNode.insertBefore(this.#wrapper, this.#audio);
-    this.#wrapper.appendChild(this.#audio);
-    this.#audio.addEventListener('play', () => {
+    this.audio.parentNode.insertBefore(this.#wrapper, this.audio);
+    this.#wrapper.appendChild(this.audio);
+    this.audio.addEventListener('play', () => {
       this.#wrapper.classList.add('cplayer--playing');
     });
-    this.#audio.addEventListener('pause', () => {
+    this.audio.addEventListener('pause', () => {
       this.#wrapper.classList.remove('cplayer--playing');
     });
-    this.#audio.addEventListener('ended', () => {
+    this.audio.addEventListener('ended', () => {
       this.#wrapper.classList.remove('cplayer--playing');
     });
   }
 
   #insertProgress() {
-    this.#progress = document.createElement('div');
-    this.#progress.classList.add('cplayer__progress');
-    this.#wrapper.appendChild(this.#progress);
-    this.#audio.addEventListener('timeupdate', () => {
-      const duration = this.#audio.duration;
-      const currentTime = this.#audio.currentTime;
-      const progress = (currentTime / duration) * 100;
-      this.#progress.style.setProperty('--percent', progress.toFixed(2) + '%');
+    const progress = document.createElement('div');
+    progress.classList.add('cplayer__progress');
+    this.audio.addEventListener('timeupdate', () => {
+      const duration = this.audio.duration;
+      const currentTime = this.audio.currentTime;
+      const percent = (currentTime / duration) * 100;
+      progress.style.setProperty('--percent', percent.toFixed(2) + '%');
     });
+    this.#wrapper.appendChild(progress);
   }
 
-  #insertAction() {
-    this.#action = document.createElement('button');
-    this.#action.classList.add('cplayer__action');
-    this.#wrapper.appendChild(this.#action);
-    this.#action.addEventListener('click', () => this.toggle());
-  }
+  #insertActions() {
+    const playAction = document.createElement('button');
+    playAction.classList.add('cplayer__action', 'cplayer__action--play');
+    playAction.addEventListener('click', () => this.audio.play());
+    playAction.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960">
+        <path d="M320-273v-414q0-17 12-28.5t28-11.5q5 0 10.5 1.5T381-721l326 207q9 6 13.5 15t4.5 19q0 10-4.5 19T707-446L381-239q-5 3-10.5 4.5T360-233q-16 0-28-11.5T320-273Z"/>
+        </svg>`;
+    this.#wrapper.appendChild(playAction);
 
-  toggle() {
-    if (this.#audio.paused) {
-      this.#audio.play();
-    } else {
-      this.#audio.pause();
-    }
+    const pauseAction = document.createElement('button');
+    pauseAction.classList.add('cplayer__action', 'cplayer__action--pause');
+    pauseAction.addEventListener('click', () => this.audio.pause());
+    pauseAction.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960">
+        <path d="M640-200q-33 0-56.5-23.5T560-280v-400q0-33 23.5-56.5T640-760q33 0 56.5 23.5T720-680v400q0 33-23.5 56.5T640-200Zm-320 0q-33 0-56.5-23.5T240-280v-400q0-33 23.5-56.5T320-760q33 0 56.5 23.5T400-680v400q0 33-23.5 56.5T320-200Z"/>
+        </svg>`;
+    this.#wrapper.appendChild(pauseAction);
   }
 }

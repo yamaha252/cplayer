@@ -43,21 +43,30 @@
   background: none;
   border: 0;
   cursor: pointer;
-  font-size: var(--cplayer-action-size);
-  line-height: 1;
+  display: block;
 }
 
-.cplayer__action:before {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  content: '\23F5';
-  color: var(--cplayer-action-play-color);
-  transition: all .3s linear;
+.cplayer__action svg {
+  width: var(--cplayer-action-size);
+  height: var(--cplayer-action-size);
 }
 
-.cplayer--playing .cplayer__action:before {
-  content: '\23F8';
-  color: var(--cplayer-action-pause-color);
+.cplayer__action--play svg {
+  fill: var(--cplayer-action-play-color);
+}
+
+.cplayer__action--pause svg {
+  fill: var(--cplayer-action-pause-color);
+}
+
+.cplayer__action--pause {
+  display: none;
+}
+
+.cplayer--playing .cplayer__action--play {
+  display: none;
+}
+
+.cplayer--playing .cplayer__action--pause {
+  display: block;
 }
