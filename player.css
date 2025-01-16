@@ -43,7 +43,7 @@
   background: none;
   border: 0;
   cursor: pointer;
-  display: block;
+  transition: all .3s ease-in-out;
 }
 
 .cplayer__action svg {
@@ -59,14 +59,16 @@
   fill: var(--cplayer-action-pause-color);
 }
 
-.cplayer__action--pause {
-  display: none;
-}
-
-.cplayer--playing .cplayer__action--play {
-  display: none;
-}
-
+.cplayer__action--play,
 .cplayer--playing .cplayer__action--pause {
-  display: block;
+  opacity: 1;
+  pointer-events: auto;
+  transform: none;
+}
+
+.cplayer__action--pause,
+.cplayer--playing .cplayer__action--play {
+  opacity: 0;
+  pointer-events: none;
+  transform: rotate(90deg) scale(1.2);
 }
