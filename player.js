@@ -1,6 +1,8 @@
 export class CircularPlayer {
   audio;
+
   #wrapper;
+  #destroyCallbacks = [];
 
   constructor(el) {
     this.audio = el;
@@ -11,31 +13,55 @@ export class CircularPlayer {
     this.#insertActions();
   }
 
+  destroy() {
+    for (const c of this.#destroyCallbacks) {
+      c();
+    }
+    this.#destroyCallbacks = [];
+  }
+
+  #onDestroy(fn) {
+    this.#destroyCallbacks.push(fn);
+  }
+
   #wrap() {
     this.#wrapper = document.createElement('div');
     this.#wrapper.classList.add('cplayer');
     this.audio.parentNode.insertBefore(this.#wrapper, this.audio);
     this.#wrapper.appendChild(this.audio);
-    this.audio.addEventListener('play', () => {
+
+    const playHandler = () => {
       this.#wrapper.classList.add('cplayer--playing');
-    });
-    this.audio.addEventListener('pause', () => {
+    };
+    this.audio.addEventListener('play', playHandler);
+    this.#onDestroy(() => this.audio.removeEventListener('play', playHandler));
+
+    const pauseHandler = () => {
       this.#wrapper.classList.remove('cplayer--playing');
-    });
-    this.audio.addEventListener('ended', () => {
+    };
+    this.audio.addEventListener('pause', pauseHandler);
+    this.#onDestroy(() => this.audio.removeEventListener('pause', pauseHandler));
+
+    const endedHandler = () => {
       this.#wrapper.classList.remove('cplayer--playing');
-    });
+    };
+    this.audio.addEventListener('ended', endedHandler);
+    this.#onDestroy(() => this.audio.removeEventListener('ended', endedHandler));
   }
 
   #insertProgress() {
     const progress = document.createElement('div');
     progress.classList.add('cplayer__progress');
-    this.audio.addEventListener('timeupdate', () => {
+
+    const progressHandler = () => {
       const duration = this.audio.duration;
       const currentTime = this.audio.currentTime;
       const percent = (currentTime / duration) * 100;
       progress.style.setProperty('--percent', percent.toFixed(2) + '%');
-    });
+    };
+    this.audio.addEventListener('timeupdate', progressHandler);
+    this.#onDestroy(() => this.audio.removeEventListener('timeupdate', progressHandler));
+
     this.#wrapper.appendChild(progress);
   }
 
