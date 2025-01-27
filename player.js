@@ -69,16 +69,16 @@ export class CircularPlayer {
     const playAction = document.createElement('button');
     playAction.classList.add('cplayer__action', 'cplayer__action--play');
     playAction.addEventListener('click', () => this.audio.play());
-    playAction.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960">
-        <path d="M320-273v-414q0-17 12-28.5t28-11.5q5 0 10.5 1.5T381-721l326 207q9 6 13.5 15t4.5 19q0 10-4.5 19T707-446L381-239q-5 3-10.5 4.5T360-233q-16 0-28-11.5T320-273Z"/>
+    playAction.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+        <path d="M86 47.268C87.3333 48.0378 87.3333 49.9623 86 50.7321L32 81.909C30.6667 82.6788 29 81.7165 29 80.1769L29 17.8231C29 16.2835 30.6667 15.3212 32 16.091L86 47.268Z"/>
         </svg>`;
     this.#wrapper.appendChild(playAction);
 
     const pauseAction = document.createElement('button');
     pauseAction.classList.add('cplayer__action', 'cplayer__action--pause');
     pauseAction.addEventListener('click', () => this.audio.pause());
-    pauseAction.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 -960 960 960">
-        <path d="M640-200q-33 0-56.5-23.5T560-280v-400q0-33 23.5-56.5T640-760q33 0 56.5 23.5T720-680v400q0 33-23.5 56.5T640-200Zm-320 0q-33 0-56.5-23.5T240-280v-400q0-33 23.5-56.5T320-760q33 0 56.5 23.5T400-680v400q0 33-23.5 56.5T320-200Z"/>
+    pauseAction.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+        <path fill-rule="evenodd" clip-rule="evenodd" d="M42 23C42 21.8954 41.1046 21 40 21L24 21C22.8954 21 22 21.8954 22 23L22 77C22 78.1046 22.8954 79 24 79H40C41.1046 79 42 78.1046 42 77L42 23ZM78 23C78 21.8954 77.1046 21 76 21L60 21C58.8954 21 58 21.8954 58 23L58 77C58 78.1046 58.8954 79 60 79H76C77.1046 79 78 78.1046 78 77V23Z"/>
         </svg>`;
     this.#wrapper.appendChild(pauseAction);
   }
